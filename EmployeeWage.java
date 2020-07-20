@@ -10,7 +10,7 @@ public class EmployeeWage{
                 int ispresent=1;
 		int isparttime=2;
 		int wagePerHour = 20, workHours;
-                if(employee==ispresent)
+                /*if(employee==ispresent)
 		{
 			workHours = 8;
                         System.out.println("Employee Works Full Time");
@@ -22,6 +22,20 @@ public class EmployeeWage{
 		}
 		else
 		{
+			workHours = 0;
+                        System.out.println("Employee Absent");
+		}*/
+		switch (employee)
+		{
+		case 1: 
+			workHours = 8;
+                        System.out.println("Employee Works Full Time");
+			break;
+		case 2: 
+			workHours = 4;
+                        System.out.println("Employee Works PartTime");
+			break;
+		default: 
 			workHours = 0;
                         System.out.println("Employee Absent");
 		}
