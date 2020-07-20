@@ -6,21 +6,26 @@ public class EmployeeWage{
         public static void main(String args[])
         {
                 Random random = new Random();
-                int employee = random.nextInt(2);
+                int employee = random.nextInt(3);
                 int ispresent=1;
-		int wagePerHour = 20;
+		int isparttime=2;
+		int wagePerHour = 20, workHours;
                 if(employee==ispresent)
 		{
-			int workHours = 8;
-                        System.out.println("Employee Present");
-			System.out.println("Employee Wage: "+ wagePerHour*workHours);
+			workHours = 8;
+                        System.out.println("Employee Works Full Time");
                 }
+		else if (employee==isparttime)
+		{
+			workHours = 4;
+			System.out.println("Employee Works PartTime");
+		}
 		else
 		{
-			int workHours = 0;
+			workHours = 0;
                         System.out.println("Employee Absent");
-        		System.out.println("Employee Wage: "+ wagePerHour*workHours);
 		}
+		System.out.println("Employee Wage: "+ wagePerHour * workHours);
 	}
 }
 
