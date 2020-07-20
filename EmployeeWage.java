@@ -24,7 +24,7 @@ public class EmployeeWage{
 			workHours = 0;
                         System.out.println("Employee Absent");
 		}*/
-		while(count<=monthDays)
+		while(count <= monthDays && totalWorkHours < 100)
 		{
 			int employee = random.nextInt(3);
                 	int ispresent=1;
@@ -45,6 +45,6 @@ public class EmployeeWage{
 			totalWorkHours+=workHours;
 		}
 		empWage=wagePerHour * totalWorkHours;
-		System.out.printf("Employee Wage for %d days: %d ", count-1, empWage);
+		System.out.printf("Employee Wage for %d days and %d totalhours : %d ", count-1,totalWorkHours, empWage);
 	}
 }
