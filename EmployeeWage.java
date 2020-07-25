@@ -2,23 +2,31 @@
 import java.util.*;
 public class EmployeeWage{
 
-        private final int wagePerHour, maxWorkingDays, maxWorkingHours; //instance variable
-	private final String companyName; //instance Variables
-
-	//Parameterized Constructor
-        public EmployeeWage(int wagePerHour, int maxWorkingDays, int maxWorkingHours, String companyName){
-		this.wagePerHour=wagePerHour;
-		this.maxWorkingDays=maxWorkingDays;
-		this.maxWorkingHours=maxWorkingHours;
-		this.companyName=companyName;
-		EmpWageCal();
+	private CompanyDetails companyArray[];
+	private int numberOfArrayElements = 0;
+	
+	//Parameteerized Constructor
+	public EmployeeWage(int arraylength) {
+			companyArray = new CompanyDetails[arraylength];
+	}
+	
+	public void addCompanyDetails(int wagePerHour, int maxWorkingDays, int maxWorkingHours, String companyName) {
+		companyArray[numberOfArrayElements] = new CompanyDetails(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
+		numberOfArrayElements++;
+	}
+	public void empWageCal() {
+		//passing the company details from array to the wage calculation method in Employee Class
+		for(int i=0; i < numberOfArrayElements; i++) {
+			companyArray[i].setTotalWage(this.empWageCal(companyArray[i]));
+			System.out.println(companyArray[i]);
+		}
 	}
 
-	public void EmpWageCal()
+	public int empWageCal(CompanyDetails details)
         {
 		int totalWorkHours=0, workHours, totalWage, count=0; //local variables
                 Random random = new Random();
-                while(count <= this.maxWorkingDays && totalWorkHours < this.maxWorkingHours)
+                while(count <= details.maxWorkingDays && totalWorkHours < details.maxWorkingHours)
                 {
                     int employee = random.nextInt(3); //local variable
                     switch (employee)
@@ -30,22 +38,15 @@ public class EmployeeWage{
                     count++;
                     totalWorkHours+=workHours;
                 }
-                totalWage=this.wagePerHour * totalWorkHours;
-		System.out.println(toPrint(this.companyName,count,totalWorkHours,totalWage,this.maxWorkingDays));
-        }
-
-       // @Override //Overriding the inbuilt toString method
-        public String toPrint(String companyName, int count, int totalWorkHours, int totalWage, int maxWorkingDays) {
-                if(count==maxWorkingDays)
-                        return String.format("Company %s: Employee Wage for %d days and %d totalhours : %d ", companyName, count-1, totalWorkHours,  totalWage);
-                else
-                        return String.format("Company %s: Employee Wage for %d days and %d totalhours : %d ", companyName, count, totalWorkHours,  totalWage);
+                totalWage=details.wagePerHour * totalWorkHours;
+		return totalWage;
         }
 
 	public static void main(String args[]){
 		Scanner input =  new Scanner(System.in);
                 System.out.print("Enter the number of Companies: \t");
                 int companyCount = input.nextInt();
+		EmployeeWage sample = new EmployeeWage(companyCount);
                 for(int i = 0; i<companyCount; i++)
                 {
                         System.out.print("Enter the Name of the Company: ");
@@ -56,7 +57,9 @@ public class EmployeeWage{
                         int maxWorkingHours = input.nextInt();
                         System.out.print("Enter the Wage per hour of Company: ");
                         int wagePerHour = input.nextInt();
-                        EmployeeWage object = new EmployeeWage(wagePerHour,maxWorkingDays,maxWorkingHours,companyName);
+			sample.addCompanyDetails(wagePerHour, maxWorkingDays, maxWorkingHours, companyName);
 		}
+		sample.empWageCal();
+		input.close();
 	}
 }
