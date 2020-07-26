@@ -1,6 +1,6 @@
 //Welcome to EmployeeWage Computation Program
 import java.util.*;
-public class EmployeeWage{
+public class EmployeeWage implements ComputeEmpWage{
 
 	private CompanyDetails companyArray[];
 	private int numberOfArrayElements = 0;
@@ -14,7 +14,7 @@ public class EmployeeWage{
 		companyArray[numberOfArrayElements] = new CompanyDetails(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
 		numberOfArrayElements++;
 	}
-	public void empWageCal() {
+	public void getTotalWage() {
 		//passing the company details from array to the wage calculation method in Employee Class
 		for(int i=0; i < numberOfArrayElements; i++) {
 			companyArray[i].setTotalWage(this.empWageCal(companyArray[i]));
@@ -59,7 +59,7 @@ public class EmployeeWage{
                         int wagePerHour = input.nextInt();
 			sample.addCompanyDetails(wagePerHour, maxWorkingDays, maxWorkingHours, companyName);
 		}
-		sample.empWageCal();
+		sample.getTotalWage();
 		input.close();
 	}
 }
