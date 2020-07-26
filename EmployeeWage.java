@@ -26,7 +26,7 @@ public class EmployeeWage implements ComputeEmpWage{
 
 	public int empWageCal(CompanyDetails details)
         {
-		int totalWorkHours=0, workHours, totalWage, count=0; //local variables
+		int totalWorkHours=0, workHours, totalWage, count=0, dailywage; //local variables
                 Random random = new Random();
                 while(count <= details.maxWorkingDays && totalWorkHours < details.maxWorkingHours)
                 {
@@ -38,6 +38,8 @@ public class EmployeeWage implements ComputeEmpWage{
                     default: workHours = 0;   break;
                     }
                     count++;
+		    dailywage = details.wagePerHour*workHours;
+                    details.setDailyWage(dailywage);
                     totalWorkHours+=workHours;
                 }
                 totalWage=details.wagePerHour * totalWorkHours;
