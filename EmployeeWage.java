@@ -3,21 +3,24 @@ import java.util.*;
 public class EmployeeWage implements ComputeEmpWage{
 
 	private List<CompanyDetails> companydetailsList;
+	private Map<String, CompanyDetails> companydetailsMap;
 
 	//Parameteerized Constructor
 	public EmployeeWage() {
 		companydetailsList = new ArrayList<CompanyDetails>();
+		companydetailsMap = new HashMap<>();
 	}
-	
+
 	public void addCompanyDetails(int wagePerHour, int maxWorkingDays, int maxWorkingHours, String companyName) {
 		CompanyDetails companydetails = new CompanyDetails(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
 		companydetailsList.add(companydetails);
+		companydetailsMap.put(companyName, companydetails);
 	}
-	public void getTotalWage() {
+	public void computeTotalWage() {
 		//passing the company details from array to the wage calculation method in Employee Class
 		for(CompanyDetails data : companydetailsList) {
 			data.setTotalWage(this.empWageCal(data));
-			System.out.println(data);
+			//System.out.println(data);
 		}
 	}
 
@@ -41,6 +44,11 @@ public class EmployeeWage implements ComputeEmpWage{
 		return totalWage;
         }
 
+	public void getTotalWage(String company) {
+		int wage = companydetailsMap.get(company).totalWage;
+		System.out.println("TotalWage of "+company+" is "+wage);
+	}
+
 	public static void getCompanyDetails() {
 		Scanner input =  new Scanner(System.in);
 	        System.out.print("Enter the number of Companies: \t");
@@ -63,7 +71,10 @@ public class EmployeeWage implements ComputeEmpWage{
                 	else
                 		System.out.println("Enter Proper Details");
         	}
-        	sample.getTotalWage();
+		sample.computeTotalWage();
+        	System.out.print("Enter the company for total Wage: ");
+        	String company = input.next();
+        	sample.getTotalWage(company);
         	input.close();
 	}
 
