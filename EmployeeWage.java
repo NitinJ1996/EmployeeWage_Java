@@ -2,23 +2,22 @@
 import java.util.*;
 public class EmployeeWage implements ComputeEmpWage{
 
-	private CompanyDetails companyArray[];
-	private int numberOfArrayElements = 0;
-	
+	private List<CompanyDetails> companydetailsList;
+
 	//Parameteerized Constructor
-	public EmployeeWage(int arraylength) {
-			companyArray = new CompanyDetails[arraylength];
+	public EmployeeWage() {
+		companydetailsList = new ArrayList<CompanyDetails>();
 	}
 	
 	public void addCompanyDetails(int wagePerHour, int maxWorkingDays, int maxWorkingHours, String companyName) {
-		companyArray[numberOfArrayElements] = new CompanyDetails(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
-		numberOfArrayElements++;
+		CompanyDetails companydetails = new CompanyDetails(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
+		companydetailsList.add(companydetails);
 	}
 	public void getTotalWage() {
 		//passing the company details from array to the wage calculation method in Employee Class
-		for(int i=0; i < numberOfArrayElements; i++) {
-			companyArray[i].setTotalWage(this.empWageCal(companyArray[i]));
-			System.out.println(companyArray[i]);
+		for(CompanyDetails data : companydetailsList) {
+			data.setTotalWage(this.empWageCal(data));
+			System.out.println(data);
 		}
 	}
 
@@ -42,24 +41,34 @@ public class EmployeeWage implements ComputeEmpWage{
 		return totalWage;
         }
 
-	public static void main(String args[]){
+	public static void getCompanyDetails() {
 		Scanner input =  new Scanner(System.in);
-                System.out.print("Enter the number of Companies: \t");
-                int companyCount = input.nextInt();
-		EmployeeWage sample = new EmployeeWage(companyCount);
-                for(int i = 0; i<companyCount; i++)
-                {
-                        System.out.print("Enter the Name of the Company: ");
-                        String companyName = input.next();
-                        System.out.print("Enter the number of Max Working Days in a month: ");
-                        int maxWorkingDays = input.nextInt();
-                        System.out.print("Enter the number of Max Working Hours in a month: ");
-                        int maxWorkingHours = input.nextInt();
-                        System.out.print("Enter the Wage per hour of Company: ");
-                        int wagePerHour = input.nextInt();
-			sample.addCompanyDetails(wagePerHour, maxWorkingDays, maxWorkingHours, companyName);
-		}
-		sample.getTotalWage();
-		input.close();
+	        System.out.print("Enter the number of Companies: \t");
+        	int companyCount = input.nextInt();
+        	EmployeeWage sample = new EmployeeWage();
+        	for(int i = 0; i<companyCount; i++)
+        	{
+                	System.out.print("Enter the Name of the Company: ");
+                	String companyName = input.next();
+                	System.out.print("Enter the number of Max Working Days(less than 27) in a month: ");
+                	int maxWorkingDays = input.nextInt();
+                	System.out.print("Enter the number of Max Working Hours(less than 234) in a month: ");
+                	int maxWorkingHours = input.nextInt();
+                	System.out.print("Enter the Wage per hour of Company: ");
+                	int wagePerHour = input.nextInt();
+                	int checkMonthDays = (maxWorkingDays<=26 && maxWorkingDays>0)?1:0;
+                	int checkWorkingHours = (maxWorkingHours<=234 && maxWorkingHours>0)?1:0;
+                	if (checkMonthDays==1 && checkWorkingHours==1 && wagePerHour>0)
+                		sample.addCompanyDetails(wagePerHour, maxWorkingDays, maxWorkingHours, companyName);
+                	else
+                		System.out.println("Enter Proper Details");
+        	}
+        	sample.getTotalWage();
+        	input.close();
+	}
+
+
+	public static void main(String args[]){
+		getCompanyDetails();
 	}
 }
